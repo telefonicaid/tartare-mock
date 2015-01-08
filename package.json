@@ -1,0 +1,32 @@
+{
+  "name": "tartare-mock",
+  "version": "0.5.0",
+  "description": "A handy server to mock any HTTP behaviour",
+  "license": "Apache-2.0",
+  "author": "Jose Antonio Rodríguez Fernández <joseantonio.rodriguezfernandez@telefonica.com>",
+  "main": "./index",
+  "bin": {
+    "apimockserver": "./bin/apimockserver"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/jscs index.js bin lib && ./node_modules/.bin/eslint index.js bin lib",
+    "prepublish": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telefonicaid/tartare-mock.git"
+  },
+  "bugs": "https://github.com/telefonicaid/tartare-mock/issues",
+  "engines": {
+    "node": ">=0.10",
+    "npm": ">=1.4.0"
+  },
+  "keywords": [
+    "testing",
+    "QA",
+    "acceptance",
+    "HTTP",
+    "mock",
+    "server"
+  ]
+}
