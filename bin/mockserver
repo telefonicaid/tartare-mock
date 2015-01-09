@@ -23,6 +23,8 @@
 
 'use strict';
 
+/* eslint-disable no-process-exit */
+
 var optimist = require('optimist'),
     util = require('util');
 
@@ -31,22 +33,22 @@ var argv = optimist
          '         [-p <port>]\n' +
          '         [-s <ssl_port> -k <key_file> -c <cert_file>]\n' +
          '         [-2 <2wayssl_port> -k <key_file> -c <cert_file> -w <ca_file>]')
-  .options('a', { alias: 'admin-port', describe: 'Administration port', demand: true })
-  .options('p', { alias: 'port', describe: 'API Mock Server port (HTTP)' })
-  .options('s', { alias: 'ssl-port', describe: 'API Mock Server port (HTTPS)' })
-  .options('2', { alias: '2wayssl-port', describe: 'API Mock Server port (2waySSL)' })
-  .options('k', { alias: 'key', describe: 'Private key file for HTTPS/2waySSL server' })
-  .options('c', { alias: 'cert', describe: 'Certificate file for HTTPS/2waySSL server' })
-  .options('w', { alias: 'ca', describe: 'Authority certificate file for 2waySSL server' })
-  .options('t', { alias: 'timeout', describe: 'Server timeout in ms (default: 2 min)' })
+  .options('a', {alias: 'admin-port', describe: 'Administration port', demand: true})
+  .options('p', {alias: 'port', describe: 'API Mock Server port (HTTP)'})
+  .options('s', {alias: 'ssl-port', describe: 'API Mock Server port (HTTPS)'})
+  .options('2', {alias: '2wayssl-port', describe: 'API Mock Server port (2waySSL)'})
+  .options('k', {alias: 'key', describe: 'Private key file for HTTPS/2waySSL server'})
+  .options('c', {alias: 'cert', describe: 'Certificate file for HTTPS/2waySSL server'})
+  .options('w', {alias: 'ca', describe: 'Authority certificate file for 2waySSL server'})
+  .options('t', {alias: 'timeout', describe: 'Server timeout in ms (default: 2 min)'})
   .argv;
 
-if ((argv.a && typeof(argv.a) !== 'number') ||
-    (argv.p && typeof(argv.p) !== 'number') ||
-    (argv.s && typeof(argv.s) !== 'number') ||
-    (argv['2'] && typeof(argv['2']) !== 'number') ||
+if ((argv.a && typeof argv.a !== 'number') ||
+    (argv.p && typeof argv.p !== 'number') ||
+    (argv.s && typeof argv.s !== 'number') ||
+    (argv['2'] && typeof argv['2'] !== 'number') ||
     (argv.w && util.isArray(argv.w)) ||
-    (argv.t && typeof(argv.t) !== 'number') ||
+    (argv.t && typeof argv.t !== 'number') ||
     (argv.s && !(argv.k && argv.c)) ||  // k and c are mandatory when s exists
     (argv['2'] && !(argv.k && argv.c && argv.w))) {  // k, c and w are mandatory when 2 exists
   optimist.showHelp();
@@ -70,7 +72,7 @@ if (argv.s && argv['2']) {
 var settings = {};
 settings.admin = {port: argv.a};
 if (argv.p) {
-  settings.http = { port: argv.p };
+  settings.http = {port: argv.p};
 }
 if (argv.s) {
   settings.https = {
