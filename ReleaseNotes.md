@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+## v0.6.0 / XXX
+
+
 ## v0.5.0 / 11 Jan 2015
 * `tartare-mock` is born as an independent package. Previously its functionality was in the `tartare` package.
 * `lastrequests` resource now include a timestamp for each received request and the list of last request is ordered

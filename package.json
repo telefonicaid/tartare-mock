@@ -1,6 +1,6 @@
 {
   "name": "tartare-mock",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A handy server to mock any HTTP behaviour",
   "license": "Apache-2.0",
   "author": "Jose Antonio Rodríguez Fernández <joseantonio.rodriguezfernandez@telefonica.com>",
