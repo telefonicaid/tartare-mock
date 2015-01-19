@@ -21,10 +21,14 @@
 
 'use strict';
 
-var AdminClient = require('./lib/admin-client'),
+var Server = require('./lib/server'),
+    AdminClient = require('./lib/admin-client'),
     util = require('./lib/util');
 
 module.exports = {
+  createServer: function createServer(settings) {
+    return new Server(settings);
+  },
   createAdminClient: function createAdminClient(hostname, adminPort) {
     return new AdminClient({
       baseUrl: 'http://' + hostname + ':' + adminPort + '/admin/v1'
