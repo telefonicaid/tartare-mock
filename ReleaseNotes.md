@@ -1,5 +1,19 @@
 # RELEASE NOTES
 
+## v0.6.0 / 13 Feb 2015
+* Added support to use the mock programmatically. A mock instance can created using the `createServer` function
+  and there are methods to `start` and `stop` the Mock.
+```javascript
+var tartareMock = require('tartare-mock');
+var mock = tartareMock.createServer(settings);
+mock.start(function(err) {
+  console.log('Mock started');
+  mock.stop(function() {
+    console.log('Mock stopped');
+  );
+);
+```
+
 ## v0.5.0 / 11 Jan 2015
 * `tartare-mock` is born as an independent package. Previously its functionality was in the `tartare` package.
 * `lastrequests` resource now include a timestamp for each received request and the list of last request is ordered

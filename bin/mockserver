@@ -26,7 +26,8 @@
 /* eslint-disable no-process-exit */
 
 var optimist = require('optimist'),
-    util = require('util');
+    util = require('util'),
+    fs = require('fs');
 
 var argv = optimist
   .usage('\nUsage: apimockserver -a <admin_port>\n' +
@@ -42,6 +43,12 @@ var argv = optimist
   .options('w', {alias: 'ca', describe: 'Authority certificate file for 2waySSL server'})
   .options('t', {alias: 'timeout', describe: 'Server timeout in ms (default: 2 min)'})
   .argv;
+
+if (!(argv.p || argv.s || argv['2'])) {
+  console.error('ERROR: At least one server (HTTP, HTTPS, 2waySSL) port must be indicated');
+  optimist.showHelp();
+  process.exit(1);
+}
 
 if ((argv.a && typeof argv.a !== 'number') ||
     (argv.p && typeof argv.p !== 'number') ||
@@ -77,20 +84,51 @@ if (argv.p) {
 if (argv.s) {
   settings.https = {
     port: argv.s,
-    key: argv.k[0],
-    cert: argv.c[0]
+    key: fs.readFileSync(argv.k[0], 'utf8'),
+    cert: fs.readFileSync(argv.c[0], 'utf8')
   };
 }
 if (argv['2']) {
   settings.twoWaySsl = {
     port: argv['2'],
-    key: argv.k[1] || argv.k[0],
-    cert: argv.c[1] || argv.c[0],
-    ca: argv.w
+    key: fs.readFileSync(argv.k[1] || argv.k[0], 'utf8'),
+    cert: fs.readFileSync(argv.c[1] || argv.c[0], 'utf8'),
+    ca: fs.readFileSync(argv.w, 'utf8')
   };
 }
 if (argv.t) {
   settings.timeout = argv.t;
 }
 
-require('../lib/server')(settings);
+var mock = require('../').createServer(settings);
+
+mock.start(function(err) {
+  if (err) {
+    console.error('Mock ERROR' + (err.serverName ? ' in server ' + err.serverName : '') + ':');
+    console.error(err.stack);
+    process.exit(100);
+  }
+  console.log('Mock listening on ports:');
+  console.log('     Admin:', settings.admin.port);
+  if (settings.http) {
+    console.log('      HTTP:', settings.http.port);
+  }
+  if (settings.https) {
+    console.log('     HTTPS:', settings.https.port);
+  }
+  if (settings.twoWaySsl) {
+    console.log('   2waySSL:', settings.twoWaySsl.port);
+  }
+});
+
+process.on('SIGINT', function() {
+  mock.stop(function() {
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', function() {
+  mock.stop(function() {
+    process.exit(0);
+  });
+});
