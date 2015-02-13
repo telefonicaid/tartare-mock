@@ -1,6 +1,6 @@
 # RELEASE NOTES
 
-## v0.6.0 / XXX
+## v0.6.0 / 13 Feb 2015
 * Added support to use the mock programmatically. A mock instance can created using the `createServer` function
   and there are methods to `start` and `stop` the Mock.
 ```javascript
@@ -13,7 +13,6 @@ mock.start(function(err) {
   );
 );
 ```
-
 
 ## v0.5.0 / 11 Jan 2015
 * `tartare-mock` is born as an independent package. Previously its functionality was in the `tartare` package.
