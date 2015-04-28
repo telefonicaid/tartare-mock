@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.6.1 / 28 Apr 2015
+* Fixed: When setting a new configuration and there are several 'last requests' for such a configuration, only one
+  'last request' is removed.
+
 ## v0.6.0 / 13 Feb 2015
 * Added support to use the mock programmatically. A mock instance can created using the `createServer` function
   and there are methods to `start` and `stop` the Mock.
